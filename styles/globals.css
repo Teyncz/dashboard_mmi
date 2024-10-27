@@ -2,26 +2,136 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+#__next {
+  height: 100%;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@media only screen and (min-width: 1024px) {
+  #__next {
+    height: 100vh;
+    overflow: hidden;
   }
 }
+
+@media only screen and (max-width: 500px) {
+  .login_shadow {
+    box-shadow: none
+  }
+
+}
+
+@media only screen and (max-width: 750px) {
+  .account_shadow {
+    box-shadow: none;
+    width: 100%;
+    padding: 30px;
+  }
+
+}
+
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2d55ff;
+  border-radius: 10px;
+}
+
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 5px;
+}
+
+.blue-scrollbar::-webkit-scrollbar-thumb {
+  background: #2d55ff;
+  border-radius: 10px;
+}
+
+#\#26C281::-webkit-scrollbar-thumb {
+  background: #26C281;
+  border-radius: 10px;
+}
+
+#\#BE5683::-webkit-scrollbar-thumb {
+  background: #BE5683;
+  border-radius: 10px;
+}
+
+#\#FF9470::-webkit-scrollbar-thumb {
+  background: #FF9470;
+  border-radius: 10px;
+}
+
+#\#197292::-webkit-scrollbar-thumb {
+  background: #197292;
+  border-radius: 10px;
+}
+
+#\#CD1C18::-webkit-scrollbar-thumb {
+  background: #CD1C18;
+  border-radius: 10px;
+}
+
+.popupanim {
+  animation: 8s ease-out showPopup;
+}
+
+@keyframes showPopup {
+  0% {
+    margin-left: 0;
+    opacity: 0;
+  }
+  5% {
+    margin-left: 50px;
+    opacity: 1;
+  }
+
+  90% {
+    margin-left: 50px;
+    opacity: 1;
+  }
+
+  100% {
+    margin-left: 0px;
+    opacity: 0;
+  }
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+input:focus {
+  outline: none;
+}
+
+.teacher-svg {
+  width: 50%;
+  height: auto; 
+}
+
+@media (max-width: 1024px) {
+  .teacher-svg {
+      width: auto; 
+      height: 50%; 
+  }
+}
+
+

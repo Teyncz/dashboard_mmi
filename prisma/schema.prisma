@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model coefue {
+  id     Int    @id @default(autoincrement())
+  idEcts Int
+  idUE   String
+  coef   String
+}
+
+model grades {
+  id            Int         @id @default(autoincrement())
+  studentNumber String
+  studentGrade  String
+  gradeId       Int
+  gradeList     gradeslist? @relation(fields: [gradeId], references: [id])  
+}
+
+model gradeslist {
+  id        Int      @id @default(autoincrement())
+  gradeName String
+  gradeLink String
+  date      DateTime
+  skill     String
+  subject   String
+  avg       String   @default("")
+  grades    grades[] 
+}
+
+model mcc {
+  id   Int    @id @default(autoincrement())
+  ects String
+  code String
+}
+
+model ue {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model tasks {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  Color    String
+  Date     DateTime
+  Hour     String
+  Statut   String   @default("toDo")
+  TaskInfo String   @db.VarChar(100)
+}
+
+model user {
+  id            Int    @id @default(autoincrement())
+  email         String @unique
+  password      String 
+  studentNumber String @unique
+  fname         String?
+  lname         String?
+  pp            String?
+  color         String @default("#2D55FF")
+  tp            String?
+}
