@@ -42,11 +42,11 @@ export default function TeacherPage(user) {
                 body: JSON.stringify({ api_key: apiKey }),
             });
 
-            if (!response.ok) {
+            if (!responseTeacher.ok) {
                 throw new Error('Erreur lors de la récupération des données');
             }
 
-            const data = await response.json(); 
+            const data = await responseTeacher.json(); 
             setTeacherLinkData(data);
             console.log(teacherLinkData)
         } catch (error) {
@@ -122,7 +122,7 @@ export default function TeacherPage(user) {
 
     return (
         <div className='relative'>
-            {nextLesson ? (
+            {nextLesson && teacherLinkData && calendar ? (
                 <a href={teacherLink(nextLesson.instructors.toString())[0]} target="_blank" rel="noopener noreferrer">
                     <div className='leading-none'>
                         <h3 className='text-[16px] font-[600]'>Site de l'enseignant</h3>

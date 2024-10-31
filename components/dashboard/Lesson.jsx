@@ -8,10 +8,13 @@ import Box from '@mui/material/Box';
 export default function Lesson(user) {
     const [nextLesson, setnextLesson] = useState(null);
     const [calendar, setCalendar] = useState(null);
+    const [teacherLinkData, setTeacherLinkData] = useState(null);
+
 
     const fetchCalendar = async (tp) => {
         const apiKey = '2554f90bc807833564609b17ecc327d2c5052535a59b6b8229cdd13f67d9a4f2';
         const url = `http://162.19.243.247:5000/json/calendar_tp${tp}.json`;
+        const urlTeacher = `http://162.19.243.247:5000/json/teacherLink.json`;
 
         try {
             const response = await fetch(url, {
@@ -28,6 +31,27 @@ export default function Lesson(user) {
 
             const data = await response.json(); 
             setCalendar(data);
+            console.log(data)
+        } catch (error) {
+            console.error('Erreur :', error);
+        }
+
+        try {
+            const responseTeacher = await fetch(urlTeacher, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ api_key: apiKey }),
+            });
+
+            if (!responseTeacher.ok) {
+                throw new Error('Erreur lors de la récupération des données');
+            }
+
+            const data = await responseTeacher.json(); 
+            setTeacherLinkData(data);
+            console.log(teacherLinkData)
         } catch (error) {
             console.error('Erreur :', error);
         }
@@ -127,7 +151,7 @@ export default function Lesson(user) {
             return () => clearInterval(intervalId);
         }
 
-    }, [calendar]);
+    }, [teacherLinkData]);
 
     function teacherLink(instructorsId) {
 
