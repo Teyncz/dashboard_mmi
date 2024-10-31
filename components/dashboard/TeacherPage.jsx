@@ -3,14 +3,6 @@ import { useState, useEffect } from 'react';
 import CircularProgress, { circularProgressClasses, } from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import calendar1 from '../../public/data/calendar_tp1.json';
-import calendar2 from '../../public/data/calendar_tp2.json';
-import calendar3 from '../../public/data/calendar_tp3.json';
-import calendar4 from '../../public/data/calendar_tp4.json';
-import calendar5 from '../../public/data/calendar_tp5.json';
-import calendar6 from '../../public/data/calendar_tp6.json';
-import teacherLinkData from '../../public/data/teacherLink.json'
-
 
 export default function TeacherPage(user) {
     const [nextLesson, setnextLesson] = useState(null);
