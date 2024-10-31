@@ -111,8 +111,8 @@ export default function Login() {
                     </div>
 
                     <div className="mb-[30px] mt-[17px]">
-                        <h2 className="text-[24px] font-[500]">Connexion</h2>
-                        <p className="text-[14px] mb-[30px]">Connectez-vous avec votre email et mot de passe</p>
+                        <h2 className="text-[24px] font-[500] text-center xs:text-left">Connexion</h2>
+                        <p className="text-[14px] mb-[30px] text-center xs:text-left">Connectez-vous avec votre email et mot de passe</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="flex flex-col">

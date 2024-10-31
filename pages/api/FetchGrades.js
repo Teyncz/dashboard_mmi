@@ -9,7 +9,7 @@ export default async function handler(req, res) {
         try {
             const studentGrades = await prisma.grades.findMany({
                 where: {
-                  studentNumber: "22304420"
+                  studentNumber: studentNumber
                 },
                 include: {
                   gradeList: true  

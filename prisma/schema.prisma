@@ -27,9 +27,10 @@ model gradeslist {
   gradeName String
   gradeLink String
   date      DateTime
-  skill     String
-  subject   String
+  skill     String?
+  subject   String?
   avg       String   @default("")
+  last_modified DateTime
   grades    grades[] 
 }
 
@@ -64,4 +65,12 @@ model user {
   pp            String?
   color         String @default("#2D55FF")
   tp            String?
+}
+
+model students {
+  id            Int @id @default(autoincrement())
+  studentNumber String @db.VarChar(20) @unique
+  firstName     String @db.VarChar(50)
+  lastName      String @db.VarChar(50)
+  groupTp       String @db.VarChar(10)
 }

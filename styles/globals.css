@@ -4,6 +4,10 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
+html {
+	scroll-behavior: smooth;
+}
+
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
@@ -12,16 +16,6 @@
   }
 }
 
-#__next {
-  height: 100%;
-}
-
-@media only screen and (min-width: 1024px) {
-  #__next {
-    height: 100vh;
-    overflow: hidden;
-  }
-}
 
 @media only screen and (max-width: 500px) {
   .login_shadow {
@@ -38,7 +32,6 @@
   }
 
 }
-
 
 ::-webkit-scrollbar {
   width: 2px;

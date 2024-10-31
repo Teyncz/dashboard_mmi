@@ -8,6 +8,9 @@ import { KeyRound } from 'lucide-react';
 import { Fingerprint } from 'lucide-react';
 import { Mail } from 'lucide-react';
 import { CircleAlert } from 'lucide-react';
+import { checkbox } from "@nextui-org/react";
+import { Eye } from 'lucide-react';
+import { EyeOff } from 'lucide-react';
 
 export default function Register() {
 
@@ -49,11 +52,15 @@ export default function Register() {
     const [email, setEmail] = useState('')
 
     const [password, setPassword] = useState('')
+    const [passwordVisible, setPasswordVisible] = useState('password')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState('password')
     const [matchPassword, setMatchPassword] = useState(true)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+
 
         if (studentNumbers.includes(studentNumber)) {
             try {
@@ -101,12 +108,23 @@ export default function Register() {
 
     const checkPassword = async (p) => {
 
-        if (p != password) {
-            setMatchPassword(false)
-        } else {
+        if (password.trim() === "") {
+            setMatchPassword(true)
+
+        } else if (confirmPassword.trim() === "" || p.trim() === "") {
             setMatchPassword(true)
         }
+        else {
+            if (p === password) {
+                setMatchPassword(true)
+            } else if (p === confirmPassword) {
+                setMatchPassword(true)
+            } else {
+                setMatchPassword(false)
+            }
+        }
     }
+
 
     if (!user) {
         return (
@@ -153,8 +171,8 @@ export default function Register() {
                     </div>
 
                     <div className="mb-[30px] mt-[17px]">
-                        <h2 className="text-[24px] font-[500]">Inscription</h2>
-                        <p className="text-[14px] mb-[30px]">Inscrivez-vous avec votre email et mot de passe</p>
+                        <h2 className="text-[24px] font-[500] text-center xs:text-left">Inscription</h2>
+                        <p className="text-[14px] mb-[30px] text-center xs:text-left">Inscrivez-vous avec votre email et mot de passe</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="flex flex-col">
@@ -201,12 +219,28 @@ export default function Register() {
 
                                 <input
                                     className="outline-none w-[100%] text-[14px]"
-                                    type="password"
+                                    type={passwordVisible}
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) => { setPassword(e.target.value); checkPassword(e.target.value) }}
                                     placeholder="Votre mot de passe"
                                     required
                                 />
+                                <button onClick={() => { if (passwordVisible == "text") { setPasswordVisible('password') } else { setPasswordVisible('text') } }} type="button">
+                                    {passwordVisible == "password" ? (
+                                        <EyeOff
+                                            size={20}
+                                            color={password.length > 0 ? "#2D55FF" : "#787878"}
+                                            strokeWidth={1.5}
+                                        />
+                                    ) : (
+                                        <Eye
+                                            size={20}
+                                            color={password.length > 0 ? "#2D55FF" : "#787878"}
+                                            strokeWidth={1.5}
+                                        />
+                                    )}
+
+                                </button>
                             </div>
 
                             <div className="flex gap-[10px] border-[1px] border-[#2D55FF] rounded-[5px] py-[10px] px-[14px] items-center">
@@ -217,12 +251,29 @@ export default function Register() {
 
                                 <input
                                     className="outline-none w-[100%] text-[14px]"
-                                    type="password"
+                                    type={confirmPasswordVisible}
                                     value={confirmPassword}
                                     onChange={(e) => { setConfirmPassword(e.target.value); checkPassword(e.target.value) }}
                                     placeholder="Confirmer votre mot de passe"
                                     required
                                 />
+
+                                <button onClick={() => { if (confirmPasswordVisible == "text") { setConfirmPasswordVisible('password') } else { setConfirmPasswordVisible('text') } }} type="button">
+                                    {confirmPasswordVisible == "password" ? (
+                                        <EyeOff
+                                            size={20}
+                                            color={confirmPassword.length > 0 ? "#2D55FF" : "#787878"}
+                                            strokeWidth={1.5}
+                                        />
+                                    ) : (
+                                        <Eye
+                                            size={20}
+                                            color={confirmPassword.length > 0 ? "#2D55FF" : "#787878"}
+                                            strokeWidth={1.5}
+                                        />
+                                    )}
+
+                                </button>
                             </div>
                         </div>
 

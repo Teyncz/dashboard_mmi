@@ -8,26 +8,26 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily:{
-        font:["Inter", "sans-serif"],
+      fontFamily: {
+        font: ["Inter", "sans-serif"],
       },
       boxShadow: {
         'custom': '0px 2px 6.5px 1px rgba(0, 0, 0, 0.25)',
       },
+      backgroundImage: {
+        'blue-gradient': 'linear-gradient(90deg, #2D55FF 0%, #4F70FF 100%)',
+      },
       colors: {
-        'custom-blue': '#2D55FF',  
-      }
+        customBlue: '#2D55FF',
+        darkGray: '#181818',
+      },
+      screens: {
+        xs: '500px', // ajoute un point de rupture pour les écrans de 500px et plus
+      },
     },
     theme: {
       screens: {
-        'tablet': '640px',
-        // => @media (min-width: 640px) { ... }
-  
-        'laptop': '1024px',
-        // => @media (min-width: 1024px) { ... }
-  
-        'desktop': '1280px',
-        // => @media (min-width: 1280px) { ... }
+        xs: '500px',
       },
     }
   },

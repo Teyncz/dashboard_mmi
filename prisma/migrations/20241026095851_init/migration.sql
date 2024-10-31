@@ -1,5 +1,0 @@
--- AlterTable
-ALTER TABLE `user` MODIFY `fname` VARCHAR(191) NULL,
-    MODIFY `lname` VARCHAR(191) NULL,
-    MODIFY `pp` VARCHAR(191) NULL,
-    MODIFY `tp` VARCHAR(191) NULL;

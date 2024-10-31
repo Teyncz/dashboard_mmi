@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 
 export default function TeacherPage(user) {
 
+    console.log(user)
+
     const [datas, setDatas] = useState(null)
     const [load, setLoad] = useState(false)
     const [varColor, setVarColor] = useState("")
@@ -21,13 +23,13 @@ export default function TeacherPage(user) {
         if (userColor.toUpperCase() === "#BE5683") {
             return ('#6e304b')
         }
-        if (userColor.toUpperCase() ==="#FF9470") {
+        if (userColor.toUpperCase() === "#FF9470") {
             return ('#D35400')
         }
-        if (userColor.toUpperCase() ==="#197292") {
+        if (userColor.toUpperCase() === "#197292") {
             return ('#043B5C')
         }
-        if (userColor.toUpperCase() ==="#CD1C18") {
+        if (userColor.toUpperCase() === "#CD1C18") {
             return ('#380009')
         }
     }
@@ -35,7 +37,9 @@ export default function TeacherPage(user) {
     useEffect(() => {
         const fetchUE = async () => {
             try {
-                const res = await axios.post('/api/FetchUE');
+                const res = await axios.post('/api/FetchUE', {
+                    studentNumber: user.user.studentNumber
+                });
                 const data = res.data;
                 setDatas(data);
                 setLoad(true);
@@ -49,33 +53,37 @@ export default function TeacherPage(user) {
 
     function Bar({ ue, classue, skill }) {
         return (
-            <div className='flex flex-col gap-[20px] items-center w-[90%] overflow-hidden h-[100%]'>
+            <div className='flex flex-col gap-[20px] items-center overflow-x-hidden w-[90%] h-[100%]'>
                 <div className='flex gap-[10px] items-end w-[100%] justify-center h-[100%]'>
-                    <div className={`flex items-end justify-center w-[27%] min-h-[15px] rounded-[5px] group`} style={{ height: `${ue}%`, backgroundColor: `${user.userColor}` }}>
-                        <p className="text-white opacity-0 mb-5 group-hover:opacity-100 transition-opacity duration-300">
-                            {(ue / 5 / 2.75).toFixed(1)}
+                    <div className={`relative flex items-end justify-center w-[27%] min-h-[15px] rounded-[5px] px-[5px] cursor-pointer hover:scale-y-[0.9] origin-bottom transition-all duration-300 ease-in-out group`} style={{ height: `${ue}%`, backgroundColor: `${user.user.color}` }}>
+                        <p className={`top-0 absolute rounded-[5px] translate-y-[-30px] text-center scale-y-[1.1] opacity-0 transform group-hover:opacity-100 transition-opacity duration-300 text-[90%] w-full min-w-[fit-content] `} style={{ borderColor: user.user.color }}>
+                            {(ue / 5).toFixed(1)}
                         </p>
                     </div>
-                    <div className="w-[27%] min-h-[15px] rounded-[5px] " style={{ height: `${classue}%`, backgroundColor: `${SetVarColor(user.userColor)}` }}></div>
+                    <div className="relative flex items-end justify-center w-[27%] min-h-[15px] rounded-[5px] px-[5px] cursor-pointer hover:scale-y-[0.9] origin-bottom transition-all duration-300 ease-in-out group" style={{ height: `${classue}%`, backgroundColor: `${SetVarColor(user.user.color)}` }}>
+                        <p className={`top-0 absolute rounded-[5px] translate-y-[-30px] text-center scale-y-[1.1] opacity-0 transform group-hover:opacity-100 transition-opacity duration-300 text-[90%] w-full min-w-[fit-content] `} style={{ borderColor: user.user.color }}>
+                            {(classue / 5).toFixed(1)}
+                        </p>
+                    </div>
                 </div>
-                <p className='h-[fit-content] leading-1 text-[10px] sm:text-[13px] font-[400]'>{skill}</p>
+                <p className='h-[fit-content] leading-1 text-[7px] xs:text-[13px] font-[400] truncate overflow-hidden'>{skill}</p>
             </div>
         )
     }
 
-    if (load) {
+    if (load && user) {
 
-        const ue1 = ((datas['ue1'].result) * 5) 
-        const ue2 = ((datas['ue2'].result) * 5) 
-        const ue3 = ((datas['ue3'].result) * 5) 
-        const ue4 = ((datas['ue4'].result) * 5) 
-        const ue5 = ((datas['ue5'].result) * 5) 
+        const ue1 = ((datas['ue1'].result) * 5)
+        const ue2 = ((datas['ue2'].result) * 5)
+        const ue3 = ((datas['ue3'].result) * 5)
+        const ue4 = ((datas['ue4'].result) * 5)
+        const ue5 = ((datas['ue5'].result) * 5)
 
-        const classue1 = ((datas['ue1'].avg) * 5) 
-        const classue2 = ((datas['ue2'].avg) * 5) 
-        const classue3 = ((datas['ue3'].avg) * 5) 
-        const classue4 = ((datas['ue4'].avg) * 5) 
-        const classue5 = ((datas['ue5'].avg) * 5) 
+        const classue1 = ((datas['ue1'].avg) * 5)
+        const classue2 = ((datas['ue2'].avg) * 5)
+        const classue3 = ((datas['ue3'].avg) * 5)
+        const classue4 = ((datas['ue4'].avg) * 5)
+        const classue5 = ((datas['ue5'].avg) * 5)
 
         return (
             <section className='flex flex-col justify-between w-[100%] h-[100%]'>
@@ -84,14 +92,14 @@ export default function TeacherPage(user) {
                     <p className='mt-[5px]'>Suivez vos moyennes par compétences</p>
                 </div>
                 <div className='flex gap-[20px] h-[70%]'>
-                    <div className='flex items-end  justify-between flex-col-reverse mb-[30px] text-[13px] w-[20px] h-[100%]'>
+                    <div className='flex items-end  justify-between flex-col-reverse mb-[30px] text-[13px] w-[20px] h-[100%] pb-[33px]'>
                         <span>0</span>
                         <span>5</span>
                         <span>10</span>
                         <span>15</span>
                         <span>20</span>
                     </div>
-                    <section className='flex  items-end justify-between w-[100%]'>
+                    <section className='flex items-end justify-between w-[100%]'>
                         <Bar key={1} ue={ue1} classue={classue1} skill={"Comprendre"} />
                         <Bar key={2} ue={ue2} classue={classue2} skill={"Concevoir"} />
                         <Bar key={3} ue={ue3} classue={classue3} skill={"Exprimer"} />
@@ -101,12 +109,12 @@ export default function TeacherPage(user) {
                 </div>
                 <div className='flex gap-[25px] ml-[40px]'>
                     <div className='flex items-center gap-[15px]'>
-                        <div className='w-[15px] h-[15px] rounded-[2.5px]' style={{ backgroundColor: `${user.userColor}` }}></div>
-                        <p className='text-[13px] leading-none'>Moyenne élève</p>
+                        <div className='w-[15px] h-[15px] rounded-[2.5px]' style={{ backgroundColor: `${user.user.color}` }}></div>
+                        <p className='text-[10px] xs:text-[13px] leading-none'>Moyenne élève</p>
                     </div>
                     <div className='flex items-center gap-[15px]'>
-                        <div className='w-[15px] h-[15px] rounded-[2.5px]' style={{ backgroundColor: `${SetVarColor(user.userColor)}` }}></div>
-                        <p className='text-[13px] leading-none'>Moyenne classe</p>
+                        <div className='w-[15px] h-[15px] rounded-[2.5px]' style={{ backgroundColor: `${SetVarColor(user.user.color)}` }}></div>
+                        <p className='text-[10px] xs:text-[13px] leading-none'>Moyenne classe</p>
                     </div>
                 </div>
             </section>

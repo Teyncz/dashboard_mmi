@@ -6,6 +6,8 @@ const prisma = new PrismaClient()
 export default async function handler(req, res) {
     if (req.method === 'POST') {
 
+        const { studentNumber } = req.body;
+
         try {
 
             const ueIds = [1, 2, 3, 4, 5];
@@ -21,17 +23,17 @@ export default async function handler(req, res) {
 
                 // moyenne élève
                 const studentUE = await prisma.$queryRaw`
-                SELECT grades.studentGrade,gradeslist.subject, CoefUE.coef FROM grades
+                SELECT grades.studentGrade,gradeslist.subject, coefue.coef FROM grades
                 INNER JOIN gradeslist ON gradeslist.id = grades.gradeId
                 INNER JOIN mcc ON mcc.id = gradeslist.skill
                 INNER JOIN coefue ON coefue.idEcts = mcc.id
                 INNER JOIN ue ON ue.id = coefue.idUE
-                WHERE ue.id = ${ueId} AND grades.studentNumber = "22304420";
+                WHERE ue.id = ${ueId} AND grades.studentNumber = ${studentNumber};
                 `;
 
                 // moyenne classe
                 const classGradesAvg = await prisma.$queryRaw`
-                SELECT gradeslist.avg, gradeslist.subject, CoefUE.coef FROM grades
+                SELECT gradeslist.avg, gradeslist.subject, coefue.coef FROM grades
                 INNER JOIN gradeslist ON gradeslist.id = grades.gradeId
                 INNER JOIN mcc ON mcc.id = gradeslist.skill
                 INNER JOIN coefue ON coefue.idEcts = mcc.id
@@ -42,7 +44,17 @@ export default async function handler(req, res) {
                 // moyenne élève
                 studentUE.forEach(entry => {
                     const subject = entry.subject;
-                    const grade = parseFloat(entry.studentGrade);
+                    let grade;
+                    if (entry.studentGrade == 'ABI') {
+                        grade = 0;
+                    }
+                    else if (entry.studentGrade == 'ABJ' || entry.studentGrade == '') {
+                        grade = 0;
+                    }
+                    else {
+                        grade = parseFloat(entry.studentGrade.replace(',', '.'));
+                    }
+
                     const coef = parseFloat(entry.coef);
 
                     if (!subjectGrades[subject]) {
@@ -53,14 +65,16 @@ export default async function handler(req, res) {
                     }
 
                     subjectGrades[subject].totalGrade += grade;
-                    subjectGrades[subject].count += 1;
+                    if (entry.studentGrade != 'ABJ' && entry.studentGrade != ''){
+                        subjectGrades[subject].count += 1;
+                    }
                     subjectGrades[subject].coef = coef;
                 });
 
                 // moyenne classe
                 classGradesAvg.forEach(entry => {
                     const subject = entry.subject;
-                    const grade = parseFloat(entry.avg);
+                    const grade = parseFloat(entry.avg.replace(',', '.'));
                     const coef = parseFloat(entry.coef);
 
                     if (!classSubjectGradesAvg[subject]) {
